@@ -53,16 +53,16 @@ export const Header = () => {
                 <Grid container sx={{ ...root }}>
                     <Toolbar sx={{ width: '100%', justifyContent: 'space-between' ,padding:'0 !important'}}>
                         <Grid container >
-                            <Typography sx={{fontSize:14}}>
+                            <Typography sx={{fontSize:14,color:'white'}}>
                                 تنظیمات کاربری
                             </Typography>
                         </Grid>
                         <Grid container sx={{ justifyContent: 'end' }}>
                             <Grid item>
-                                <Button>English</Button>
+                                <Button sx={{color:'rgb(121, 131, 142)',fontSize:12}}>English</Button>
                             </Grid>
                             <Grid item>
-                                <Button>فارسی</Button>
+                                <Button sx={{color:'rgb(255, 168, 46)',fontSize:12}}>فارسی</Button>
                             </Grid>
                             <Grid item>
                                 <IconButton>

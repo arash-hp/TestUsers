@@ -1,39 +1,54 @@
-import { Grid, Link, Button, IconButton } from '@mui/material';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { Button, Grid, IconButton, Link } from '@mui/material';
+import { useCallback, useState } from 'react';
 import { EditRow } from '../EditRow/EditRow';
-import { useState } from 'react';
 
 
 
-const root = {
-    background: '#343d48 !important',
-    margin: '4px 0',
-    padding: '16px',
-    borderRadius: '16px'
-}
-export const Row = ({ handleDelete }) => {
+
+export const Row = ({ handleDelete, handleEdit, item }) => {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(!open)
-    const handleEdit = () => {
+    const [title, setTitle] = useState('');
+    const handleOpen = () => setOpen(true);
+    const handleClose = useCallback(() => {
+        setOpen(false)
+    }, [setOpen])
+
+    const openEdit = () => {
         handleOpen()
+        setTitle(`ویرایش مسیر ارتباطی ${item.logo}`)
     }
+
+    const deleteRow = () => {
+        handleDelete(item.id)
+    }
+
+    const onSubmit = (value) => {
+        handleEdit(value).then(() => handleClose())
+    }
+    const root = {
+        background: '#343d48 !important',
+        margin: '4px 0',
+        padding: '16px',
+        borderRadius: '16px'
+    }
+
     return (
         <Grid container item sx={{ ...root }}>
             <Grid container flex={2} alignItems="center">
-                <Grid container flex={1} alignItems="center" sx={{ fontSize: '12px', color: 'white', gap: '6px' }}>
-                    <InstagramIcon sx={{ fontSize: 18 }} />
-                    Instagram
+                <Grid container flex={1}  sx={{ fontSize: '12px', color: 'white', gap: '6px',alignItems:'center' }}>
+                    {/* <InstagramIcon sx={{ fontSize: 16 }} /> */}
+                    {item.logo}
                 </Grid>
                 <Grid container alignItems="center" flex={4} flexWrap='nowrap' sx={{ color: 'white', fontSize: '10px' }}>
                     لینک  :
-                    <Link sx={{ color: 'rgb(255, 168, 46)', fontSize: '12px', cursor: 'pointer', paddingLeft: '8px' }}>https://google.com</Link>
+                    <Link sx={{ color: 'rgb(255, 168, 46)', fontSize: '12px', cursor: 'pointer', paddingLeft: '8px' }}>{item.website}</Link>
                 </Grid>
             </Grid>
             <Grid container flex={1} justifyContent="flex-end">
                 <Button
-                    onClick={handleEdit}
+                    onClick={openEdit}
                     sx={{
                         width: 80, justifyContent: 'flex-start', fontSize: 12, color: 'rgb(255, 168, 46)', padding: 0, "&:hover": {
                             backgroundColor: "rgb(255, 168, 46 ,.2)",
@@ -46,7 +61,7 @@ export const Row = ({ handleDelete }) => {
                     ویرایش
                 </Button>
                 <Button
-                    onClick={handleDelete}
+                    onClick={deleteRow}
                     sx={{
                         width: 80, justifyContent: 'flex-start', fontSize: 12, color: 'rgb(244, 67, 54)', padding: 0, "&:hover": {
                             backgroundColor: "rgb(244, 67, 54,.2)",
@@ -59,7 +74,7 @@ export const Row = ({ handleDelete }) => {
                     حذف
                 </Button>
             </Grid>
-            {open && <EditRow />}
+            <EditRow open={open} onClose={handleClose} handleSubmit={onSubmit} title={title} item={item} />
         </Grid>
     )
 }

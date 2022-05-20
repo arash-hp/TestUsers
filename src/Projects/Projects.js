@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 export const Project = () => {
     const root = {
         background:'rgb(22, 27, 37)',
-        height:'100vh',
+        minHeight:'100vh',
         card:{
             maxWidth: "900px",
             marginRight: 'auto',
